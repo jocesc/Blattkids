@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presupuestador CNC Montessori - Diseñador Personalizado</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #534AB7;
+            --secondary: #1D9E75;
+            --accent: #BA7517;
+            --dark: #2C2C2A;
+            --light: #f5f5f5;
+            --danger: #E85D24;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 35px 30px;
+            border-radius: 14px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: box-shadow 0.3s;
+        }
+
+        .section:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+
+        .section h2 {
+            color: var(--primary);
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section h3 {
+            color: var(--primary);
+            font-size: 13px;
+            margin: 18px 0 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(83, 74, 183, 0.1);
+            background: #fafafa;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+
+        .input-suffix {
+            position: relative;
+        }
+
+        .input-suffix input {
+            padding-right: 40px;
+        }
+
+        .input-suffix::after {
+            content: attr(data-suffix);
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: #999;
+            font-weight: 600;
+            pointer-events: none;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border: 1.5px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkbox-item:hover {
+            border-color: var(--primary);
+            background: #f9f9f9;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .checkbox-item label {
+            flex: 1;
+            margin: 0;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .checkbox-item small {
+            display: block;
+            font-size: 10px;
+            color: #999;
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        .button {
+            width: 100%;
+            padding: 13px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .button-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #3C3489 100%);
+            color: white;
+        }
+
+        .button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(83, 74, 183, 0.3);
+        }
+
+        .button-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #0F6E56 100%);
+            color: white;
+        }
+
+        .button-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(29, 158, 117, 0.3);
+        }
+
+        .preview-3d {
+            background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
+            border: 2px dashed #999;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .preview-3d svg {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+        }
+
+        .preview-info {
+            margin-top: 16px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .cost-breakdown {
+            background: #f8f8f8;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            font-size: 13px;
+        }
+
+        .cost-item:last-child {
+            border-bottom: none;
+        }
+
+        .cost-item.total {
+            font-weight: 700;
+            color: var(--primary);
+            padding: 12px 0;
+            border-top: 2px solid #ddd;
+            font-size: 14px;
+        }
+
+        .cost-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            padding: 12px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: #999;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab-button.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .concept-card {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(83, 74, 183, 0.15);
+        }
+
+        .concept-card.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(83, 74, 183, 0.05) 0%, rgba(83, 74, 183, 0.02) 100%);
+            box-shadow: 0 4px 16px rgba(83, 74, 183, 0.25);
+        }
+
+        .concept-card h3 {
+            font-size: 13px;
+            color: var(--dark);
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+
+        .concept-card p {
+            font-size: 11px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .concept-badge {
+            display: inline-block;
+            font-size: 9px;
+            background: #f0f0f0;
+            color: #666;
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin: 2px;
+            font-weight: 600;
+        }
+
+        .success-message {
+            background: #D4EDDA;
+            border: 1px solid #C3E6CB;
+            color: #155724;
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .warning-message {
+            background: #FFF3CD;
+            border: 1px solid #FFEEBA;
+            color: #856404;
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 11px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .slider-group {
+            margin-bottom: 16px;
+        }
+
+        .slider-group label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .slider-value {
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+            accent-color: var(--primary);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .export-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row, .form-row-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+
+        .dimension-display {
+            background: #f0f0f0;
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 14px;
+            font-size: 12px;
+            text-align: center;
+            border: 1px dashed #999;
+        }
+
+        .dimension-display strong {
+            color: var(--primary);
+            font-size: 14px;
+        }
+
+        .feature-cost {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 11px;
+            color: #666;
+        }
+
+        .feature-cost-value {
+            color: var(--danger);
+            font-weight: 600;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>🛏️ Diseñador de Piso Cama Montessori CNC</h1>
+        <p>Crea tu diseño personalizado y calcula costos en tiempo real - 100% Chile</p>
+    </div>
+
+    <div class="main-grid">
+        <!-- COLUMNA 1: DISEÑADOR -->
+        <div>
+            <!-- SECCIÓN: CONCEPTO BASE -->
+            <div class="section">
+                <h2>🎨 Paso 1: Elige Concepto Base</h2>
+                
+                <div class="concept-card" data-concept="minimalista" onclick="selectConcept('minimalista')">
+                    <h3>Minimalista</h3>
+                    <p>Líneas puras y rectas</p>
+                    <span class="concept-badge">65% eficiencia</span>
+                </div>
+
+                <div class="concept-card" data-concept="organico" onclick="selectConcept('organico')">
+                    <h3>Orgánico</h3>
+                    <p>Curvas suaves y armónicas</p>
+                    <span class="concept-badge">67% eficiencia</span>
+                </div>
+
+                <div class="concept-card" data-concept="modular" onclick="selectConcept('modular')">
+                    <h3>Modular</h3>
+                    <p>Transformable 0-6+ años</p>
+                    <span class="concept-badge">59% eficiencia</span>
+                </div>
+
+                <div class="concept-card" data-concept="decorativo" onclick="selectConcept('decorativo')">
+                    <h3>Decorativo</h3>
+                    <p>Educativo e interactivo</p>
+                    <span class="concept-badge">70% eficiencia</span>
+                </div>
+            </div>
+
+            <!-- SECCIÓN: DIMENSIONES -->
+            <div class="section">
+                <h2>📐 Paso 2: Personaliza Dimensiones</h2>
+
+                <div class="dimension-display">
+                    <strong id="dim-display">800 × 1900 × 150 mm</strong>
+                    <p style="margin-top: 6px; font-size: 10px; color: #888;">Ancho × Largo × Alto</p>
+                </div>
+
+                <div class="form-row-3">
+                    <div class="form-group">
+                        <label>Ancho (mm)</label>
+                        <input type="range" id="width" min="700" max="900" value="800" step="10" oninput="updateDimensions(); updateCosts()">
+                        <div style="text-align: center; margin-top: 6px; font-size: 12px; color: var(--primary); font-weight: 700;" id="width-val">800 mm</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Largo (mm)</label>
+                        <input type="range" id="length" min="1800" max="2100" value="1900" step="10" oninput="updateDimensions(); updateCosts()">
+                        <div style="text-align: center; margin-top: 6px; font-size: 12px; color: var(--primary); font-weight: 700;" id="length-val">1900 mm</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Alto (mm)</label>
+                        <input type="range" id="height" min="100" max="250" value="150" step="10" oninput="updateDimensions(); updateCosts()">
+                        <div style="text-align: center; margin-top: 6px; font-size: 12px; color: var(--primary); font-weight: 700;" id="height-val">150 mm</div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 20px;">Características Adicionales</h3>
+
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feat-numeracion" onchange="updateCosts()">
+                        <label for="feat-numeracion">
+                            <strong>Numeración</strong>
+                            <small>1-14 grabados</small>
+                        </label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feat-sensorial" onchange="updateCosts()">
+                        <label for="feat-sensorial">
+                            <strong>Panel Sensorial</strong>
+                            <small>Texturas laterales</small>
+                        </label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feat-guardarropa" onchange="updateCosts()">
+                        <label for="feat-guardarropa">
+                            <strong>Guardarropa</strong>
+                            <small>Ganchos integrados</small>
+                        </label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feat-pizarra" onchange="updateCosts()">
+                        <label for="feat-pizarra">
+                            <strong>Pizarrón</strong>
+                            <small>En piecero</small>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECCIÓN: PREVIEW 3D -->
+            <div class="section">
+                <h2>🎯 Vista Previa</h2>
+                <div class="preview-3d">
+                    <svg id="preview-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="400" height="300" fill="#f8f8f8" stroke="#999" stroke-width="2"/>
+                        <text x="200" y="150" text-anchor="middle" font-size="14" fill="#999">
+                            Selecciona un concepto para ver preview
+                        </text>
+                    </svg>
+                    <div class="preview-info" id="preview-info"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMNA 2: CONFIGURACIÓN Y PRESUPUESTO -->
+        <div>
+            <!-- SECCIÓN: CONFIGURACIÓN -->
+            <div class="section">
+                <h2>⚙️ Paso 3: Configuración & Material</h2>
+
+                <div class="form-group">
+                    <label>🗺️ Región Chile</label>
+                    <select id="region" onchange="updateCosts()">
+                        <option value="metropolitana">Santiago - RM</option>
+                        <option value="valparaiso">Valparaíso</option>
+                        <option value="biobio">Concepción - Bío-Bío</option>
+                        <option value="losrios">Valdivia - Los Ríos</option>
+                        <option value="loslagos">Puerto Montt - Los Lagos</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>🌳 Tipo de Madera</label>
+                    <select id="wood-type" onchange="updateCosts()">
+                        <option value="birch">Plywood Birch E1 18mm - Premium</option>
+                        <option value="pino">Plywood Pino Radiata E1 18mm - Estándar</option>
+                        <option value="mdf">MDF Premium 18mm - Económico</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>📦 Cantidad</label>
+                        <input type="number" id="quantity" value="1" min="1" onchange="updateCosts()">
+                    </div>
+                    <div class="form-group">
+                        <label>⚙️ Tarifa CNC ($/min)</label>
+                        <input type="number" id="cnc-rate" value="3.5" min="2" max="8" step="0.5" onchange="updateCosts()">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>💹 Margen Ganancia (%)</label>
+                    <input type="range" id="margin-slider" min="20" max="100" value="50" step="5" oninput="updateMarginDisplay(); updateCosts()">
+                    <div style="text-align: center; margin-top: 8px; color: var(--primary); font-weight: 700; font-size: 14px;" id="margin-display">50%</div>
+                </div>
+
+                <button class="button button-primary" onclick="updateCosts()" style="margin-top: 16px;">🧮 CALCULAR PRESUPUESTO</button>
+            </div>
+
+            <!-- SECCIÓN: PRESUPUESTO -->
+            <div class="section">
+                <h2>💰 Presupuesto Detallado</h2>
+
+                <div id="results-section" class="hidden">
+                    <div class="success-message">✅ Presupuesto calculado</div>
+
+                    <div class="tabs">
+                        <button class="tab-button active" onclick="switchTab(0)">Costos</button>
+                        <button class="tab-button" onclick="switchTab(1)">Detalles</button>
+                        <button class="tab-button" onclick="switchTab(2)">Resumen</button>
+                    </div>
+
+                    <!-- TAB 1: COSTOS -->
+                    <div class="tab-content active">
+                        <h3>Por Unidad</h3>
+                        <div class="cost-breakdown">
+                            <div class="cost-item">
+                                <span>Madera</span>
+                                <span class="cost-value" id="cost-material">$0</span>
+                            </div>
+                            <div class="cost-item">
+                                <span>CNC (corte)</span>
+                                <span class="cost-value" id="cost-cnc">$0</span>
+                            </div>
+                            <div class="cost-item">
+                                <span>Características</span>
+                                <span class="cost-value" id="cost-features">$0</span>
+                            </div>
+                            <div class="cost-item total">
+                                <span>PRODUCCIÓN</span>
+                                <span class="cost-value" id="cost-production">$0</span>
+                            </div>
+                        </div>
+
+                        <h3>Precio Final</h3>
+                        <div class="cost-breakdown">
+                            <div class="cost-item">
+                                <span>Margen</span>
+                                <span class="cost-value" id="cost-margin-amt">$0</span>
+                            </div>
+                            <div class="cost-item total" style="color: var(--secondary); background: #e8f5ee; padding: 14px; margin: -20px -20px 0; border-radius: 0 0 10px 10px;">
+                                <span>💰 PRECIO VENTA</span>
+                                <span class="cost-value" id="cost-final" style="color: var(--secondary); font-size: 16px;">$0</span>
+                            </div>
+                        </div>
+
+                        <div class="warning-message" style="margin-top: 16px;">
+                            <strong>+ IVA 19%:</strong> <span id="cost-iva">$0</span>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: DETALLES -->
+                    <div class="tab-content">
+                        <div class="cost-breakdown">
+                            <div class="cost-item">
+                                <span>Diseño:</span>
+                                <span class="cost-value" id="detail-design">-</span>
+                            </div>
+                            <div class="cost-item">
+                                <span>Ancho × Largo × Alto:</span>
+                                <span class="cost-value" id="detail-dims">-</span>
+                            </div>
+                            <div class="cost-item">
+                                <span>Material:</span>
+                                <span class="cost-value" id="detail-material">-</span>
+                            </div>
+                            <div class="cost-item">
+                                <span>Región:</span>
+                                <span class="cost-value" id="detail-region">-</span>
+                            </div>
+                            <div class="cost-item">
+                                <span>Planchas necesarias:</span>
+                                <span class="cost-value" id="detail-sheets">-</span>
+                            </div>
+                            <div class="cost-item">
+                                <span>Tiempo CNC:</span>
+                                <span class="cost-value" id="detail-time">-</span>
+                            </div>
+                            <div class="cost-item">
+                                <span>Características:</span>
+                                <span class="cost-value" id="detail-features">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: RESUMEN -->
+                    <div class="tab-content">
+                        <h3>Lote Completo (x<span id="summary-qty">1</span>)</h3>
+                        <div class="cost-breakdown">
+                            <div class="cost-item">
+                                <span>Costo Total</span>
+                                <span class="cost-value" id="summary-cost">$0</span>
+                            </div>
+                            <div class="cost-item">
+                                <span>Ingresos</span>
+                                <span class="cost-value" id="summary-revenue">$0</span>
+                            </div>
+                            <div class="cost-item total" style="color: var(--secondary);">
+                                <span>GANANCIA NETA</span>
+                                <span class="cost-value" id="summary-profit" style="color: var(--secondary);">$0</span>
+                            </div>
+                            <div class="cost-item total" style="color: #0F6E56;">
+                                <span>ROI</span>
+                                <span class="cost-value" id="summary-roi" style="color: #0F6E56;">0%</span>
+                            </div>
+                        </div>
+
+                        <div class="export-buttons">
+                            <button class="button button-primary" onclick="exportJSON()">📥 JSON</button>
+                            <button class="button button-secondary" onclick="copyToClipboard()">📋 Copiar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="empty-state">
+                    <p style="text-align: center; color: #999; padding: 40px 20px; font-size: 13px;">
+                        👈 Diseña tu cama personalizada y calcula presupuesto
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ========== CONFIGURACIÓN ==========
+const designs = {
+    minimalista: { name: 'Minimalista Puro', efficiency: 65, cncTime: 45, baseSheets: 1 },
+    organico: { name: 'Montessori Orgánico', efficiency: 67, cncTime: 55, baseSheets: 1 },
+    modular: { name: 'Modular', efficiency: 59, cncTime: 70, baseSheets: 2 },
+    decorativo: { name: 'Decorativo Funcional', efficiency: 70, cncTime: 65, baseSheets: 1 }
+};
+
+const prices = {
+    metropolitana: { birch: 90000, pino: 52000, mdf: 40000 },
+    valparaiso: { birch: 92000, pino: 54000, mdf: 42000 },
+    biobio: { birch: 94000, pino: 56000, mdf: 44000 },
+    losrios: { birch: 96000, pino: 58000, mdf: 46000 },
+    loslagos: { birch: 98000, pino: 60000, mdf: 48000 }
+};
+
+const woodNames = { birch: 'Plywood Birch E1', pino: 'Pino Radiata E1', mdf: 'MDF Premium' };
+const regionNames = {
+    metropolitana: 'Santiago (RM)',
+    valparaiso: 'Valparaíso',
+    biobio: 'Concepción (Bío-Bío)',
+    losrios: 'Valdivia (Los Ríos)',
+    loslagos: 'Puerto Montt (Los Lagos)'
+};
+
+let selectedConcept = null;
+
+function selectConcept(concept) {
+    selectedConcept = concept;
+    document.querySelectorAll('.concept-card').forEach(c => c.classList.remove('selected'));
+    document.querySelector(`[data-concept="${concept}"]`).classList.add('selected');
+    generatePreview();
+    updateCosts();
+}
+
+function updateDimensions() {
+    const w = document.getElementById('width').value;
+    const l = document.getElementById('length').value;
+    const h = document.getElementById('height').value;
+    
+    document.getElementById('width-val').textContent = `${w} mm`;
+    document.getElementById('length-val').textContent = `${l} mm`;
+    document.getElementById('height-val').textContent = `${h} mm`;
+    document.getElementById('dim-display').textContent = `${w} × ${l} × ${h} mm`;
+    
+    generatePreview();
+}
+
+function updateMarginDisplay() {
+    const margin = document.getElementById('margin-slider').value;
+    document.getElementById('margin-display').textContent = `${margin}%`;
+}
+
+function generatePreview() {
+    if (!selectedConcept) return;
+    
+    const svg = document.getElementById('preview-svg');
+    svg.innerHTML = '';
+    
+    const design = designs[selectedConcept];
+    const w = parseInt(document.getElementById('width').value);
+    const l = parseInt(document.getElementById('length').value);
+    const h = parseInt(document.getElementById('height').value);
+    
+    // Fondo
+    const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    bg.setAttribute('width', '400');
+    bg.setAttribute('height', '300');
+    bg.setAttribute('fill', '#f8f8f8');
+    bg.setAttribute('stroke', '#999');
+    bg.setAttribute('stroke-width', '2');
+    svg.appendChild(bg);
+    
+    // Título
+    const title = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    title.setAttribute('x', '200');
+    title.setAttribute('y', '25');
+    title.setAttribute('text-anchor', 'middle');
+    title.setAttribute('font-size', '13');
+    title.setAttribute('font-weight', 'bold');
+    title.setAttribute('fill', '#534AB7');
+    title.textContent = design.name;
+    svg.appendChild(title);
+    
+    // Representación simple 3D
+    const colors = {
+        minimalista: ['#D4A574', '#0F6E56'],
+        organico: ['#D4A574', '#1D9E75'],
+        modular: ['#D4A574', '#BA7517'],
+        decorativo: ['#D4A574', '#E85D24']
+    };
+    
+    const baseColor = colors[selectedConcept][0];
+    const accentColor = colors[selectedConcept][1];
+    
+    // Cabecero
+    const cabecero = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    cabecero.setAttribute('x', '50');
+    cabecero.setAttribute('y', '50');
+    cabecero.setAttribute('width', '300');
+    cabecero.setAttribute('height', '80');
+    cabecero.setAttribute('fill', baseColor);
+    cabecero.setAttribute('opacity', '0.7');
+    cabecero.setAttribute('stroke', '#333');
+    cabecero.setAttribute('stroke-width', '1');
+    cabecero.setAttribute('rx', '4');
+    svg.appendChild(cabecero);
+    
+    const cabText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    cabText.setAttribute('x', '200');
+    cabText.setAttribute('y', '95');
+    cabText.setAttribute('text-anchor', 'middle');
+    cabText.setAttribute('font-size', '11');
+    cabText.setAttribute('fill', '#fff');
+    cabText.setAttribute('font-weight', 'bold');
+    cabText.textContent = 'Cabecero';
+    svg.appendChild(cabText);
+    
+    // Plataforma (cama)
+    const plataforma = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    plataforma.setAttribute('x', '40');
+    plataforma.setAttribute('y', '140');
+    plataforma.setAttribute('width', '320');
+    plataforma.setAttribute('height', '100');
+    plataforma.setAttribute('fill', baseColor);
+    plataforma.setAttribute('opacity', '0.9');
+    plataforma.setAttribute('stroke', '#333');
+    plataforma.setAttribute('stroke-width', '1');
+    plataforma.setAttribute('rx', '4');
+    svg.appendChild(plataforma);
+    
+    // Listones representados
+    for (let i = 0; i < 5; i++) {
+        const linea = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        linea.setAttribute('x1', '60');
+        linea.setAttribute('x2', '340');
+        linea.setAttribute('y1', 155 + i * 15);
+        linea.setAttribute('y2', 155 + i * 15);
+        linea.setAttribute('stroke', accentColor);
+        linea.setAttribute('stroke-width', '2');
+        svg.appendChild(linea);
+    }
+    
+    // Piecero
+    const piecero = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    piecero.setAttribute('x', '50');
+    piecero.setAttribute('y', '250');
+    piecero.setAttribute('width', '300');
+    piecero.setAttribute('height', '35');
+    piecero.setAttribute('fill', baseColor);
+    piecero.setAttribute('opacity', '0.6');
+    piecero.setAttribute('stroke', '#333');
+    piecero.setAttribute('stroke-width', '1');
+    piecero.setAttribute('rx', '4');
+    svg.appendChild(piecero);
+    
+    const pieText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    pieText.setAttribute('x', '200');
+    pieText.setAttribute('y', '272');
+    pieText.setAttribute('text-anchor', 'middle');
+    pieText.setAttribute('font-size', '10');
+    pieText.setAttribute('fill', '#333');
+    pieText.setAttribute('font-weight', 'bold');
+    pieText.textContent = 'Piecero';
+    svg.appendChild(pieText);
+    
+    // Info
+    document.getElementById('preview-info').innerHTML = `
+        <strong>${design.name}</strong><br>
+        ${w} × ${l} × ${h} mm<br>
+        Eficiencia CNC: ${design.efficiency}% | Tiempo: ${design.cncTime} min
+    `;
+}
+
+function updateCosts() {
+    if (!selectedConcept) {
+        document.getElementById('results-section').classList.add('hidden');
+        document.getElementById('empty-state').classList.remove('hidden');
+        return;
+    }
+    
+    const design = designs[selectedConcept];
+    const region = document.getElementById('region').value;
+    const woodType = document.getElementById('wood-type').value;
+    const quantity = parseInt(document.getElementById('quantity').value) || 1;
+    const cncRate = parseFloat(document.getElementById('cnc-rate').value) || 3.5;
+    const margin = parseInt(document.getElementById('margin-slider').value) || 50;
+    
+    const sheetPrice = prices[region][woodType];
+    
+    // Calcular cost adicional por características
+    let featureCost = 0;
+    let featureList = [];
+    
+    if (document.getElementById('feat-numeracion').checked) featureCost += 15000, featureList.push('Numeración');
+    if (document.getElementById('feat-sensorial').checked) featureCost += 20000, featureList.push('Sensorial');
+    if (document.getElementById('feat-guardarropa').checked) featureCost += 12000, featureList.push('Guardarropa');
+    if (document.getElementById('feat-pizarra').checked) featureCost += 18000, featureList.push('Pizarrón');
+    
+    // Cálculos
+    const totalSheets = design.baseSheets * quantity;
+    const materialCostTotal = totalSheets * sheetPrice;
+    const materialCostPerUnit = materialCostTotal / quantity;
+    
+    const cncCostTotal = design.cncTime * cncRate * quantity;
+    const cncCostPerUnit = cncCostTotal / quantity;
+    
+    const featureCostPerUnit = featureCost;
+    const featureCostTotal = featureCost * quantity;
+    
+    const productionCostPerUnit = materialCostPerUnit + cncCostPerUnit + featureCostPerUnit;
+    const marginAmount = (productionCostPerUnit * margin) / 100;
+    const finalPrice = productionCostPerUnit + marginAmount;
+    const finalPriceWithIVA = finalPrice * 1.19;
+    
+    const revenueTotal = finalPrice * quantity;
+    const totalProduction = materialCostTotal + cncCostTotal + featureCostTotal;
+    const profitTotal = revenueTotal - totalProduction;
+    const roi = (profitTotal / totalProduction) * 100;
+    
+    // Mostrar resultados
+    document.getElementById('results-section').classList.remove('hidden');
+    document.getElementById('empty-state').classList.add('hidden');
+    
+    // TAB 1
+    document.getElementById('cost-material').textContent = `$${formatNum(materialCostPerUnit)}`;
+    document.getElementById('cost-cnc').textContent = `$${formatNum(cncCostPerUnit)}`;
+    document.getElementById('cost-features').textContent = `$${formatNum(featureCostPerUnit)}`;
+    document.getElementById('cost-production').textContent = `$${formatNum(productionCostPerUnit)}`;
+    document.getElementById('cost-margin-amt').textContent = `$${formatNum(marginAmount)}`;
+    document.getElementById('cost-final').textContent = `$${formatNum(finalPrice)}`;
+    document.getElementById('cost-iva').textContent = `$${formatNum(finalPriceWithIVA)}`;
+    
+    // TAB 2
+    document.getElementById('detail-design').textContent = design.name;
+    document.getElementById('detail-dims').textContent = `${document.getElementById('width').value} × ${document.getElementById('length').value} × ${document.getElementById('height').value} mm`;
+    document.getElementById('detail-material').textContent = woodNames[woodType];
+    document.getElementById('detail-region').textContent = regionNames[region];
+    document.getElementById('detail-sheets').textContent = totalSheets;
+    document.getElementById('detail-time').textContent = `${design.cncTime} min`;
+    document.getElementById('detail-features').textContent = featureList.length > 0 ? featureList.join(', ') : 'Ninguna';
+    
+    // TAB 3
+    document.getElementById('summary-qty').textContent = quantity;
+    document.getElementById('summary-cost').textContent = `$${formatNum(totalProduction)}`;
+    document.getElementById('summary-revenue').textContent = `$${formatNum(revenueTotal)}`;
+    document.getElementById('summary-profit').textContent = `$${formatNum(profitTotal)}`;
+    document.getElementById('summary-roi').textContent = `${roi.toFixed(1)}%`;
+    
+    // Guardar para exportar
+    window.lastCalc = {
+        design: design.name,
+        dims: `${document.getElementById('width').value} × ${document.getElementById('length').value} × ${document.getElementById('height').value}`,
+        material: woodNames[woodType],
+        region: regionNames[region],
+        quantity: quantity,
+        pricePerUnit: Math.round(finalPrice),
+        totalProduction: Math.round(totalProduction),
+        totalRevenue: Math.round(revenueTotal),
+        totalProfit: Math.round(profitTotal),
+        roi: roi.toFixed(1)
+    };
+}
+
+function formatNum(n) {
+    return Math.round(n).toLocaleString('es-CL');
+}
+
+function switchTab(idx) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content')[idx].classList.add('active');
+    document.querySelectorAll('.tab-button')[idx].classList.add('active');
+}
+
+function exportJSON() {
+    if (!window.lastCalc) return alert('Calcula primero');
+    const json = JSON.stringify(window.lastCalc, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `presupuesto_${Date.now()}.json`;
+    a.click();
+}
+
+function copyToClipboard() {
+    if (!window.lastCalc) return alert('Calcula primero');
+    const text = `Presupuesto: ${window.lastCalc.design}\nDimensiones: ${window.lastCalc.dims}\nMaterial: ${window.lastCalc.material}\nRegión: ${window.lastCalc.region}\nCantidad: ${window.lastCalc.quantity}\nPrecio Unidad: $${formatNum(window.lastCalc.pricePerUnit)}\nCosto Total: $${formatNum(window.lastCalc.totalProduction)}\nIngresos: $${formatNum(window.lastCalc.totalRevenue)}\nGanancia: $${formatNum(window.lastCalc.totalProfit)}\nROI: ${window.lastCalc.roi}%`;
+    navigator.clipboard.writeText(text);
+    alert('✅ Copiado!');
+}
+</script>
+
+</body>
+</html>
