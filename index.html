@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Presupuestador CNC para Piso Cama Montessori - 100% Chile">
+    <title>Piso Cama Montessori CNC - Presupuestador Chile 🇨🇱</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #534AB7;
+            --secondary: #1D9E75;
+            --accent: #BA7517;
+            --dark: #2C2C2A;
+            --light: #f5f5f5;
+            --border: #ddd;
+            --success: #0F6E56;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 14px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+
+        .header-badges {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 14px;
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        /* LAYOUT */
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 28px;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+        }
+
+        .section h2 {
+            color: var(--primary);
+            font-size: 18px;
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 3px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+        }
+
+        .section h3 {
+            color: var(--primary);
+            font-size: 14px;
+            margin: 20px 0 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* CONCEPTOS */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .concept-card {
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            background: white;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 6px 16px rgba(83, 74, 183, 0.15);
+        }
+
+        .concept-card.selected {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(83, 74, 183, 0.05) 0%, rgba(83, 74, 183, 0.02) 100%);
+            box-shadow: 0 4px 16px rgba(83, 74, 183, 0.25);
+        }
+
+        .concept-card h3 {
+            font-size: 14px;
+            color: var(--dark);
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .concept-card p {
+            font-size: 11px;
+            color: #888;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .concept-badge {
+            display: inline-block;
+            font-size: 10px;
+            background: #f0f0f0;
+            color: #666;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin: 2px;
+            font-weight: 600;
+        }
+
+        /* FORMS */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(83, 74, 183, 0.1);
+            background: #fafafa;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .form-hint {
+            font-size: 11px;
+            color: #888;
+            margin-top: 6px;
+            font-style: italic;
+        }
+
+        /* BUTTONS */
+        .button {
+            padding: 13px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 100%;
+        }
+
+        .button-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #3C3489 100%);
+            color: white;
+        }
+
+        .button-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(83, 74, 183, 0.3);
+        }
+
+        .button-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #0F6E56 100%);
+            color: white;
+        }
+
+        .button-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(29, 158, 117, 0.3);
+        }
+
+        .button-small {
+            padding: 8px 16px;
+            font-size: 11px;
+            width: auto;
+        }
+
+        /* PRECIOS */
+        .price-reference {
+            background: linear-gradient(135deg, #E1F5EE 0%, #D4EDDA 100%);
+            border-left: 5px solid var(--secondary);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 14px;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .provider-box {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .provider-box:hover {
+            background: #f0f0f0;
+            border-color: var(--primary);
+        }
+
+        .provider-name {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .provider-price {
+            color: var(--success);
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        /* RESULTADOS */
+        .results-container {
+            grid-column: 1 / -1;
+        }
+
+        .cost-breakdown {
+            background: #f8f8f8;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            font-size: 13px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .cost-item:last-child {
+            border-bottom: none;
+        }
+
+        .cost-item.total {
+            font-weight: 700;
+            color: var(--primary);
+            padding-top: 14px;
+            border-top: 2px solid var(--border);
+            font-size: 14px;
+        }
+
+        .cost-item.highlight {
+            background: #fff9e6;
+            padding: 12px;
+            margin: 0 -12px;
+            border-radius: 6px;
+            border-top: 2px solid var(--accent);
+        }
+
+        .cost-label {
+            color: var(--dark);
+        }
+
+        .cost-value {
+            font-weight: 600;
+            color: var(--primary);
+            text-align: right;
+        }
+
+        /* ESPECIFICACIONES */
+        .specifications {
+            background: #f8f8f8;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .spec-item {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 13px;
+        }
+
+        .spec-item:last-child {
+            border-bottom: none;
+        }
+
+        .spec-label {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .spec-value {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* EFICIENCIA */
+        .efficiency-bar {
+            background: white;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .efficiency-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .efficiency-fill {
+            background: linear-gradient(90deg, var(--secondary) 0%, var(--success) 100%);
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+            transition: width 0.5s ease;
+        }
+
+        /* NESTING */
+        .nesting-diagram {
+            background: #f5f5f5;
+            border: 2px dashed #999;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nesting-diagram svg {
+            width: 100%;
+            max-height: 280px;
+        }
+
+        /* MENSAJES */
+        .success-message {
+            background: #D4EDDA;
+            border: 1px solid #C3E6CB;
+            color: #155724;
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .warning-message {
+            background: #FFF3CD;
+            border: 1px solid #FFEEBA;
+            color: #856404;
+            padding: 14px 16px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* EXPORT */
+        .export-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .export-buttons .button {
+            width: 100%;
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #888;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .header-badges {
+                font-size: 11px;
+            }
+        }
+
+        /* LOADING */
+        .loading {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(83, 74, 183, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            padding: 14px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: #999;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="header-content">
+            <h1>🛏️ Presupuestador: Piso Cama Montessori CNC</h1>
+            <p class="header-subtitle">Diseño, optimización y cálculo de costos 100% adaptado al mercado chileno</p>
+            <div class="header-badges">
+                <div class="badge">🇨🇱 Chile</div>
+                <div class="badge">💰 Precios Reales 2026</div>
+                <div class="badge">🏭 Proveedores Locales</div>
+                <div class="badge">⚙️ Optimización CNC</div>
+                <div class="badge">📊 Presupuestos Profesionales</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-grid">
+        
+        <!-- SECCIÓN 1: DISEÑO -->
+        <div class="section">
+            <h2>🎨 Paso 1: Selecciona tu Diseño</h2>
+            
+            <div class="concepts-grid">
+                <div class="concept-card" data-concept="minimalista" onclick="selectConcept('minimalista')">
+                    <h3>Minimalista</h3>
+                    <p>Líneas limpias, máxima eficiencia</p>
+                    <span class="concept-badge">65% eficiencia</span>
+                    <span class="concept-badge">1 plancha</span>
+                    <span class="concept-badge">45 min CNC</span>
+                </div>
+
+                <div class="concept-card" data-concept="organico" onclick="selectConcept('organico')">
+                    <h3>Orgánico</h3>
+                    <p>Curvas suaves Montessori</p>
+                    <span class="concept-badge">67% eficiencia</span>
+                    <span class="concept-badge">1 plancha</span>
+                    <span class="concept-badge">55 min CNC</span>
+                </div>
+
+                <div class="concept-card" data-concept="modular" onclick="selectConcept('modular')">
+                    <h3>Modular</h3>
+                    <p>0-6+ años, intercambiable</p>
+                    <span class="concept-badge">59% eficiencia</span>
+                    <span class="concept-badge">2 planchas</span>
+                    <span class="concept-badge">70 min CNC</span>
+                </div>
+
+                <div class="concept-card" data-concept="decorativo" onclick="selectConcept('decorativo')">
+                    <h3>Decorativo</h3>
+                    <p>Educativo + sensorial</p>
+                    <span class="concept-badge">70% eficiencia</span>
+                    <span class="concept-badge">1 plancha</span>
+                    <span class="concept-badge">65 min CNC</span>
+                </div>
+            </div>
+
+            <div id="concept-description" style="margin-top: 18px; padding: 16px; background: #f8f8f8; border-left: 4px solid var(--primary); border-radius: 6px; font-size: 13px; line-height: 1.6; display: none;"></div>
+        </div>
+
+        <!-- SECCIÓN 2: CONFIGURACIÓN -->
+        <div class="section">
+            <h2>⚙️ Paso 2: Configura tu Producción</h2>
+            
+            <div class="form-group">
+                <label>🗺️ Región de Compra (Chile)</label>
+                <select id="region" onchange="updatePrices()">
+                    <option value="metropolitana">Santiago - Región Metropolitana</option>
+                    <option value="valparaiso">Valparaíso</option>
+                    <option value="biobio">Concepción - Bío-Bío</option>
+                    <option value="losrios">Valdivia - Los Ríos</option>
+                    <option value="loslagos">Puerto Montt - Los Lagos</option>
+                    <option value="aisen">Coyhaique - Aysén</option>
+                    <option value="magallanes">Punta Arenas - Magallanes</option>
+                </select>
+                <p class="form-hint">Precios varían por localidad y disponibilidad</p>
+            </div>
+
+            <div class="form-group">
+                <label>🌳 Tipo de Madera</label>
+                <select id="wood-type" onchange="updatePrices()">
+                    <option value="">-- Selecciona material --</option>
+                    <option value="birch">🇸🇪 Plywood Birch E1 18mm (Premium)</option>
+                    <option value="pino">🇨🇱 Plywood Pino Radiata E1 18mm (Estándar)</option>
+                    <option value="mdf">MDF Premium 18mm (Económico)</option>
+                    <option value="radiata">Plywood Radiata E1 18mm (Accesible)</option>
+                </select>
+                <p class="form-hint">Material importado vs. local (impacta en precio y tiempos)</p>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>📦 Cantidad de Camas</label>
+                    <input type="number" id="quantity" min="1" value="1" onchange="calculateCosts()">
+                </div>
+                <div class="form-group">
+                    <label>⚙️ Tarifa CNC ($/min)</label>
+                    <input type="number" id="cnc-rate" value="3.5" step="0.5" min="2" max="8" onchange="calculateCosts()">
+                    <p class="form-hint">Rango: $2-8 según complejidad</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>💹 Margen de Ganancia (%)</label>
+                <input type="number" id="margin" value="50" min="20" max="150" step="5" onchange="calculateCosts()">
+            </div>
+
+            <button class="button button-primary" onclick="calculateCosts()">🧮 Calcular Presupuesto</button>
+        </div>
+
+        <!-- SECCIÓN 3: REFERENCIAS DE PRECIOS -->
+        <div class="section">
+            <h2>💰 Referencias de Precios Chile</h2>
+            
+            <div class="price-reference">
+                <strong>⚠️ Nota importante:</strong><br>
+                Precios son referencias del mercado chileno (2026). Los valores fluctúan según región, disponibilidad, cantidad y despacho. Consulta directamente con proveedores para cotización exacta.
+            </div>
+
+            <h3>Plywood Birch E1 (18mm) - Importado</h3>
+            <div class="provider-box">
+                <div class="provider-name">🏭 Sodimac / Constructor</div>
+                <div class="provider-price">CLP $88,000 - $98,000</div>
+            </div>
+            <div class="provider-box">
+                <div class="provider-name">🏭 Easy / Bazar</div>
+                <div class="provider-price">CLP $85,000 - $95,000</div>
+            </div>
+            <div class="provider-box">
+                <div class="provider-name">🏭 Distribuidoras (Paine, Pirque)</div>
+                <div class="provider-price">CLP $72,000 - $85,000</div>
+            </div>
+
+            <h3>Plywood Pino Radiata E1 (18mm) - Local</h3>
+            <div class="provider-box">
+                <div class="provider-name">🏭 Homecenters RM</div>
+                <div class="provider-price">CLP $48,000 - $58,000</div>
+            </div>
+            <div class="provider-box">
+                <div class="provider-name">🏭 Distribuidoras</div>
+                <div class="provider-price">CLP $40,000 - $52,000</div>
+            </div>
+
+            <h3>MDF Premium (18mm) - Económico</h3>
+            <div class="provider-box">
+                <div class="provider-name">🏭 Homecenters</div>
+                <div class="provider-price">CLP $38,000 - $48,000</div>
+            </div>
+
+            <h3>Servicios CNC Chile</h3>
+            <div class="provider-box">
+                <div class="provider-name">🏭 Talleres Santiago (RM)</div>
+                <div class="provider-price">$2.50 - $4.50 / minuto</div>
+            </div>
+            <div class="provider-box">
+                <div class="provider-name">🏭 Regiones</div>
+                <div class="provider-price">$2.00 - $3.50 / minuto</div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 4: RESULTADOS -->
+        <div class="section results-container">
+            <h2>📊 Presupuesto Detallado</h2>
+
+            <div id="results-container" class="hidden">
+                <div class="success-message">
+                    <span>✅</span>
+                    <span>Presupuesto calculado exitosamente</span>
+                </div>
+
+                <div class="warning-message" id="warning-impuestos" style="display: none;">
+                    <strong>⚠️ Nota Impuestos:</strong> El precio de venta incluye margen indicado pero NO incluye IVA (19%). Para precio final al cliente, suma 19% al precio de venta.
+                </div>
+
+                <!-- TABS -->
+                <div class="tabs">
+                    <button class="tab-button active" onclick="switchTab(0)">Resumen</button>
+                    <button class="tab-button" onclick="switchTab(1)">Detalles Costos</button>
+                    <button class="tab-button" onclick="switchTab(2)">Nesting</button>
+                </div>
+
+                <!-- TAB 1: RESUMEN -->
+                <div class="tab-content active">
+                    <div class="specifications">
+                        <div class="spec-item">
+                            <div class="spec-label">Concepto:</div>
+                            <div class="spec-value" id="spec-design"></div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">Material:</div>
+                            <div class="spec-value" id="spec-material"></div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">Región:</div>
+                            <div class="spec-value" id="spec-region"></div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">Cantidad:</div>
+                            <div class="spec-value" id="spec-quantity"></div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">Planchas:</div>
+                            <div class="spec-value" id="spec-sheets"></div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">Eficiencia CNC:</div>
+                            <div class="spec-value" id="spec-efficiency"></div>
+                        </div>
+                        <div class="spec-item">
+                            <div class="spec-label">Tarifa CNC:</div>
+                            <div class="spec-value" id="spec-cnc-rate"></div>
+                        </div>
+                    </div>
+
+                    <h3>Eficiencia de Corte</h3>
+                    <div class="efficiency-bar">
+                        <div class="efficiency-label">
+                            <span>Aprovechamiento de Material</span>
+                            <span id="efficiency-percent">0%</span>
+                        </div>
+                        <div class="efficiency-fill" id="efficiency-fill" style="width: 0%">
+                            <span id="efficiency-text">0%</span>
+                        </div>
+                    </div>
+
+                    <h3>Resumen de Costos</h3>
+                    <div class="cost-breakdown">
+                        <div class="cost-item">
+                            <span class="cost-label">💵 Costo Material (por unidad)</span>
+                            <span class="cost-value" id="cost-material-unit">CLP $0</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-label">⚙️ Costo CNC (por unidad)</span>
+                            <span class="cost-value" id="cost-cnc-unit">CLP $0</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-label">📦 Producción Total (por unidad)</span>
+                            <span class="cost-value" id="cost-production-unit">CLP $0</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-label">📈 Margen de Ganancia</span>
+                            <span class="cost-value" id="cost-margin-unit">CLP $0</span>
+                        </div>
+                        <div class="cost-item total highlight">
+                            <span class="cost-label">💰 PRECIO DE VENTA (por unidad)</span>
+                            <span class="cost-value" id="cost-final-unit" style="font-size: 15px;">CLP $0</span>
+                        </div>
+                    </div>
+
+                    <h3>Totales de Producción</h3>
+                    <div class="cost-breakdown">
+                        <div class="cost-item">
+                            <span class="cost-label">Costo Total Material</span>
+                            <span class="cost-value" id="cost-material-total">CLP $0</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-label">Costo Total CNC</span>
+                            <span class="cost-value" id="cost-cnc-total">CLP $0</span>
+                        </div>
+                        <div class="cost-item total">
+                            <span class="cost-label">💸 COSTO TOTAL PRODUCCIÓN</span>
+                            <span class="cost-value" id="cost-total">CLP $0</span>
+                        </div>
+                        <div class="cost-item total" style="color: var(--success);">
+                            <span class="cost-label">💵 INGRESOS TOTALES</span>
+                            <span class="cost-value" id="revenue-total">CLP $0</span>
+                        </div>
+                        <div class="cost-item total" style="color: #0F6E56; background: #d4edd4; padding: 14px; margin: 14px -20px -20px; border-radius: 0 0 10px 10px;">
+                            <span class="cost-label" style="color: #0F6E56;">📈 GANANCIA NETA</span>
+                            <span class="cost-value" id="profit-total" style="color: #0F6E56; font-size: 15px;">CLP $0</span>
+                        </div>
+                    </div>
+
+                    <div class="warning-message" id="roi-message" style="margin-top: 20px;">
+                        <strong>ROI Estimado:</strong> <span id="roi-text">0%</span>
+                    </div>
+                </div>
+
+                <!-- TAB 2: DETALLES -->
+                <div class="tab-content">
+                    <h3>Desglose Completo de Costos</h3>
+                    <div class="cost-breakdown">
+                        <div style="font-size: 12px; color: #666; margin-bottom: 16px;">
+                            <strong>Por Unidad:</strong>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-label">Precio plancha de madera</span>
+                            <span class="cost-value" id="detail-sheet-price">CLP $0</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-label">Planchas necesarias (por cama)</span>
+                            <span class="cost-value" id="detail-sheets-qty">0</span>
+                        </div>
+                        <div class="cost-item total">
+                            <span class="cost-label">Subtotal Material</span>
+                            <span class="cost-value" id="detail-material-subtotal">CLP $0</span>
+                        </div>
+                        <div class="cost-item" style="margin-top: 12px;">
+                            <span class="cost-label">Tarifa CNC</span>
+                            <span class="cost-value" id="detail-cnc-rate">CLP $0/min</span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-label">Minutos de fabricación</span>
+                            <span class="cost-value" id="detail-cnc-time">0 min</span>
+                        </div>
+                        <div class="cost-item total">
+                            <span class="cost-label">Subtotal CNC</span>
+                            <span class="cost-value" id="detail-cnc-subtotal">CLP $0</span>
+                        </div>
+                        <div class="cost-item" style="margin-top: 12px; border-top: 2px solid #ddd; padding-top: 12px;">
+                            <span class="cost-label"><strong>Costo de Producción</strong></span>
+                            <span class="cost-value"><strong id="detail-production-cost">CLP $0</strong></span>
+                        </div>
+                        <div class="cost-item">
+                            <span class="cost-label">Margen (%)</span>
+                            <span class="cost-value" id="detail-margin-pct">0%</span>
+                        </div>
+                        <div class="cost-item total highlight">
+                            <span class="cost-label"><strong>Precio Final de Venta</strong></span>
+                            <span class="cost-value"><strong id="detail-final-price">CLP $0</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: NESTING -->
+                <div class="tab-content">
+                    <h3>Diagrama de Corte Optimizado</h3>
+                    <div class="nesting-diagram">
+                        <svg id="nesting-svg" viewBox="0 0 450 350" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="450" height="350" fill="#f5f5f5" stroke="#888" stroke-width="2"/>
+                            <text x="225" y="175" text-anchor="middle" font-size="14" fill="#888">Diagrama de nesting</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div id="empty-state" class="empty-state">
+                <div class="icon">📋</div>
+                <p><strong>Selecciona un diseño y configura tu producción</strong></p>
+                <p style="font-size: 12px; color: #999;">La aplicación calculará automáticamente todos los costos, márgenes y ROI estimado</p>
+            </div>
+
+            <!-- EXPORT BUTTONS -->
+            <div id="export-section" class="export-buttons hidden" style="margin-top: 24px;">
+                <button class="button button-primary" onclick="exportJSON()">
+                    📥 Descargar JSON
+                </button>
+                <button class="button button-secondary" onclick="copyToClipboard()">
+                    📋 Copiar Presupuesto
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ========== CONFIGURACIÓN DE CONCEPTOS ==========
+const designs = {
+    minimalista: {
+        name: 'Minimalista Puro',
+        description: 'Líneas rectas, geometría pura. Máxima eficiencia CNC (65%). Ideal para presupuesto bajo. Tiempo: 45 min. Piezas: Cabecero, Piecero, 2 Rieles, 14 Listones.',
+        sheets: 1,
+        efficiency: 65,
+        cncTime: 45,
+    },
+    organico: {
+        name: 'Montessori Orgánico',
+        description: 'Curvas suaves, proporción áurea, calidez táctil (radio 8mm). Eficiencia 67%. Auténtico Montessori. Tiempo: 55 min. Mayor complejidad visual.',
+        sheets: 1,
+        efficiency: 67,
+        cncTime: 55,
+    },
+    modular: {
+        name: 'Modular Transformable',
+        description: 'Cabeceros intercambiables (bajo 0-2 años + hastial 2-6 años). Máxima longevidad. 2 planchas, 100% reutilizable. Tiempo: 70 min total.',
+        sheets: 2,
+        efficiency: 59,
+        cncTime: 70,
+    },
+    decorativo: {
+        name: 'Decorativo Funcional',
+        description: 'Numeración (1-14), panel sensorial, guardarropa, pizarrón. Eficiencia 70%. Educativo integrado. Tiempo: 65 min. Grabados CNC incluidos.',
+        sheets: 1,
+        efficiency: 70,
+        cncTime: 65,
+    }
+};
+
+// ========== PRECIOS POR REGIÓN CHILE ==========
+const prices = {
+    metropolitana: {
+        birch: 90000,
+        pino: 52000,
+        mdf: 42000,
+        radiata: 48000
+    },
+    valparaiso: {
+        birch: 92000,
+        pino: 54000,
+        mdf: 44000,
+        radiata: 50000
+    },
+    biobio: {
+        birch: 94000,
+        pino: 56000,
+        mdf: 46000,
+        radiata: 52000
+    },
+    losrios: {
+        birch: 96000,
+        pino: 58000,
+        mdf: 48000,
+        radiata: 54000
+    },
+    loslagos: {
+        birch: 98000,
+        pino: 60000,
+        mdf: 50000,
+        radiata: 56000
+    },
+    aisen: {
+        birch: 100000,
+        pino: 62000,
+        mdf: 52000,
+        radiata: 58000
+    },
+    magallanes: {
+        birch: 102000,
+        pino: 64000,
+        mdf: 54000,
+        radiata: 60000
+    }
+};
+
+const woodNames = {
+    birch: 'Plywood Birch E1 18mm',
+    pino: 'Plywood Pino E1 18mm',
+    mdf: 'MDF Premium 18mm',
+    radiata: 'Plywood Radiata E1 18mm'
+};
+
+const regionNames = {
+    metropolitana: 'Santiago (RM)',
+    valparaiso: 'Valparaíso',
+    biobio: 'Concepción (Bío-Bío)',
+    losrios: 'Valdivia (Los Ríos)',
+    loslagos: 'Puerto Montt (Los Lagos)',
+    aisen: 'Coyhaique (Aysén)',
+    magallanes: 'Punta Arenas (Magallanes)'
+};
+
+let selectedConcept = null;
+
+// ========== FUNCIONES PRINCIPALES ==========
+function selectConcept(concept) {
+    selectedConcept = concept;
+    
+    document.querySelectorAll('.concept-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+    document.querySelector(`[data-concept="${concept}"]`).classList.add('selected');
+    
+    const desc = document.getElementById('concept-description');
+    desc.textContent = designs[concept].description;
+    desc.style.display = 'block';
+}
+
+function updatePrices() {
+    // Placeholder para futuras integraciones
+}
+
+function calculateCosts() {
+    if (!selectedConcept) {
+        alert('⚠️ Por favor selecciona un concepto de diseño primero');
+        return;
+    }
+
+    const design = designs[selectedConcept];
+    const region = document.getElementById('region').value;
+    const woodType = document.getElementById('wood-type').value;
+    const quantity = parseInt(document.getElementById('quantity').value) || 1;
+    const cncRate = parseFloat(document.getElementById('cnc-rate').value) || 3.5;
+    const margin = parseFloat(document.getElementById('margin').value) || 50;
+
+    if (!woodType) {
+        alert('⚠️ Por favor selecciona un tipo de madera');
+        return;
+    }
+
+    // OBTENER PRECIO PLANCHA
+    const sheetPrice = prices[region][woodType];
+
+    // CÁLCULOS
+    const sheetsPerUnit = design.sheets;
+    const totalSheets = sheetsPerUnit * quantity;
+    
+    const materialCostTotal = totalSheets * sheetPrice;
+    const materialCostPerUnit = materialCostTotal / quantity;
+
+    const cncCostTotal = design.cncTime * cncRate * quantity;
+    const cncCostPerUnit = cncCostTotal / quantity;
+
+    const productionCostPerUnit = materialCostPerUnit + cncCostPerUnit;
+    const marginAmount = (productionCostPerUnit * margin) / 100;
+    const finalPrice = productionCostPerUnit + marginAmount;
+    const finalPriceWithIVA = finalPrice * 1.19;
+
+    const revenueTotal = finalPrice * quantity;
+    const revenueTotalWithIVA = finalPriceWithIVA * quantity;
+    const totalProduction = materialCostTotal + cncCostTotal;
+    const profitTotal = revenueTotal - totalProduction;
+    const profitPercent = (profitTotal / totalProduction) * 100;
+
+    // MOSTRAR RESULTADOS
+    document.getElementById('results-container').classList.remove('hidden');
+    document.getElementById('empty-state').classList.add('hidden');
+    document.getElementById('export-section').classList.remove('hidden');
+    document.getElementById('warning-impuestos').style.display = 'block';
+
+    // ESPECIFICACIONES
+    document.getElementById('spec-design').textContent = design.name;
+    document.getElementById('spec-material').textContent = woodNames[woodType];
+    document.getElementById('spec-region').textContent = regionNames[region];
+    document.getElementById('spec-quantity').textContent = `${quantity} unidad(es)`;
+    document.getElementById('spec-sheets').textContent = `${totalSheets} (${sheetsPerUnit} por unidad)`;
+    document.getElementById('spec-efficiency').textContent = `${design.efficiency}%`;
+    document.getElementById('spec-cnc-rate').textContent = `CLP $${cncRate.toFixed(2)}/min`;
+
+    // EFICIENCIA
+    document.getElementById('efficiency-percent').textContent = `${design.efficiency}%`;
+    document.getElementById('efficiency-fill').style.width = `${design.efficiency}%`;
+    document.getElementById('efficiency-text').textContent = `${design.efficiency}%`;
+
+    // COSTOS POR UNIDAD
+    document.getElementById('cost-material-unit').textContent = `CLP $${formatNumber(materialCostPerUnit)}`;
+    document.getElementById('cost-cnc-unit').textContent = `CLP $${formatNumber(cncCostPerUnit)}`;
+    document.getElementById('cost-production-unit').textContent = `CLP $${formatNumber(productionCostPerUnit)}`;
+    document.getElementById('cost-margin-unit').textContent = `CLP $${formatNumber(marginAmount)} (${margin}%)`;
+    document.getElementById('cost-final-unit').textContent = `CLP $${formatNumber(finalPrice)}`;
+
+    // COSTOS TOTALES
+    document.getElementById('cost-material-total').textContent = `CLP $${formatNumber(materialCostTotal)}`;
+    document.getElementById('cost-cnc-total').textContent = `CLP $${formatNumber(cncCostTotal)}`;
+    document.getElementById('cost-total').textContent = `CLP $${formatNumber(totalProduction)}`;
+    document.getElementById('revenue-total').textContent = `CLP $${formatNumber(revenueTotal)}`;
+    document.getElementById('profit-total').textContent = `CLP $${formatNumber(profitTotal)}`;
+
+    // DETALLES
+    document.getElementById('detail-sheet-price').textContent = `CLP $${formatNumber(sheetPrice)}`;
+    document.getElementById('detail-sheets-qty').textContent = `${sheetsPerUnit}`;
+    document.getElementById('detail-material-subtotal').textContent = `CLP $${formatNumber(materialCostPerUnit)}`;
+    document.getElementById('detail-cnc-rate').textContent = `CLP $${cncRate.toFixed(2)}/min`;
+    document.getElementById('detail-cnc-time').textContent = `${design.cncTime} min`;
+    document.getElementById('detail-cnc-subtotal').textContent = `CLP $${formatNumber(cncCostPerUnit)}`;
+    document.getElementById('detail-production-cost').textContent = `CLP $${formatNumber(productionCostPerUnit)}`;
+    document.getElementById('detail-margin-pct').textContent = `${margin}%`;
+    document.getElementById('detail-final-price').textContent = `CLP $${formatNumber(finalPrice)}`;
+
+    // ROI
+    const roiPercent = (profitTotal / totalProduction) * 100;
+    document.getElementById('roi-text').textContent = `${roiPercent.toFixed(1)}% sobre costo de producción (lote completo)`;
+
+    // GUARDAR PARA EXPORTAR
+    window.lastCalculation = {
+        timestamp: new Date().toLocaleString('es-CL'),
+        design: selectedConcept,
+        designName: design.name,
+        region: regionNames[region],
+        material: woodNames[woodType],
+        quantity: quantity,
+        sheets: totalSheets,
+        efficiency: design.efficiency,
+        costs: {
+            sheetPrice: sheetPrice,
+            materialPerUnit: Math.round(materialCostPerUnit),
+            cncPerUnit: Math.round(cncCostPerUnit),
+            productionPerUnit: Math.round(productionCostPerUnit),
+            finalPrice: Math.round(finalPrice),
+            finalPriceWithIVA: Math.round(finalPriceWithIVA),
+            totalMaterial: Math.round(materialCostTotal),
+            totalCNC: Math.round(cncCostTotal),
+            totalProduction: Math.round(totalProduction),
+            totalRevenue: Math.round(revenueTotal),
+            totalProfit: Math.round(profitTotal),
+            profitPercent: roiPercent.toFixed(2)
+        }
+    };
+
+    generateNestingDiagram();
+    scrollToResults();
+}
+
+function formatNumber(num) {
+    return Math.round(num).toLocaleString('es-CL');
+}
+
+function generateNestingDiagram() {
+    const svg = document.getElementById('nesting-svg');
+    svg.innerHTML = '';
+
+    const design = designs[selectedConcept];
+    
+    const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    bg.setAttribute('width', '450');
+    bg.setAttribute('height', '350');
+    bg.setAttribute('fill', '#ffffff');
+    bg.setAttribute('stroke', '#999');
+    bg.setAttribute('stroke-width', '2');
+    svg.appendChild(bg);
+
+    const title = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    title.setAttribute('x', '225');
+    title.setAttribute('y', '25');
+    title.setAttribute('text-anchor', 'middle');
+    title.setAttribute('font-size', '13');
+    title.setAttribute('font-weight', '700');
+    title.setAttribute('fill', '#534AB7');
+    title.textContent = 'Plywood 1220 × 2440 mm';
+    svg.appendChild(title);
+
+    const colors = ['#D4A574', '#0F6E56', '#BA7517', '#E85D24'];
+    const pieces = ['Cabecero', 'Listones', 'Rieles', 'Piecero'];
+    let y = 55;
+
+    pieces.forEach((piece, idx) => {
+        const w = 120 + (idx * 25);
+        const h = 60;
+        
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', '20');
+        rect.setAttribute('y', y);
+        rect.setAttribute('width', w);
+        rect.setAttribute('height', h);
+        rect.setAttribute('fill', colors[idx]);
+        rect.setAttribute('opacity', '0.75');
+        rect.setAttribute('stroke', '#333');
+        rect.setAttribute('stroke-width', '1');
+        rect.setAttribute('rx', '4');
+        svg.appendChild(rect);
+
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', `${20 + w/2}`);
+        text.setAttribute('y', `${y + h/2 + 6}`);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('font-size', '12');
+        text.setAttribute('fill', '#fff');
+        text.setAttribute('font-weight', '700');
+        text.textContent = piece;
+        svg.appendChild(text);
+
+        y += h + 15;
+    });
+
+    const note = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    note.setAttribute('x', '225');
+    note.setAttribute('y', '335');
+    note.setAttribute('text-anchor', 'middle');
+    note.setAttribute('font-size', '12');
+    note.setAttribute('fill', '#1D9E75');
+    note.setAttribute('font-weight', '700');
+    note.textContent = `✓ Eficiencia: ${design.efficiency}% | Tiempo CNC: ${design.cncTime} min`;
+    svg.appendChild(note);
+}
+
+function switchTab(tabIndex) {
+    const contents = document.querySelectorAll('.tab-content');
+    const buttons = document.querySelectorAll('.tab-button');
+    
+    contents.forEach(content => content.classList.remove('active'));
+    buttons.forEach(button => button.classList.remove('active'));
+    
+    contents[tabIndex].classList.add('active');
+    buttons[tabIndex].classList.add('active');
+}
+
+function scrollToResults() {
+    const resultsSection = document.querySelector('.results-container');
+    if (resultsSection) {
+        setTimeout(() => {
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    }
+}
+
+function exportJSON() {
+    if (!window.lastCalculation) {
+        alert('⚠️ Por favor calcula un presupuesto primero');
+        return;
+    }
+
+    const json = JSON.stringify(window.lastCalculation, null, 2);
+    const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `presupuesto_piso_cama_${window.lastCalculation.design}_${Date.now()}.json`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function copyToClipboard() {
+    if (!window.lastCalculation) {
+        alert('⚠️ Por favor calcula un presupuesto primero');
+        return;
+    }
+
+    const c = window.lastCalculation.costs;
+    const text = `
+╔════════════════════════════════════════════════════════════════╗
+║          PRESUPUESTO: PISO CAMA MONTESSORI CNC CHILE          ║
+╚════════════════════════════════════════════════════════════════╝
+
+📋 PROYECTO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Concepto:           ${window.lastCalculation.designName}
+Material:           ${window.lastCalculation.material}
+Región:             ${window.lastCalculation.region}
+Cantidad:           ${window.lastCalculation.quantity} unidad(es)
+Planchas totales:   ${window.lastCalculation.sheets}
+Eficiencia CNC:     ${window.lastCalculation.efficiency}%
+
+💰 COSTOS POR UNIDAD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Madera:             CLP $${c.materialPerUnit.toLocaleString('es-CL')}
+CNC (corte):        CLP $${c.cncPerUnit.toLocaleString('es-CL')}
+Costo Producción:   CLP $${c.productionPerUnit.toLocaleString('es-CL')}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Precio de Venta:    CLP $${c.finalPrice.toLocaleString('es-CL')}
++ IVA 19%:          CLC $${c.finalPriceWithIVA.toLocaleString('es-CL')} (con impuesto)
+
+💵 TOTALES PRODUCCIÓN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Costo Total:        CLP $${c.totalProduction.toLocaleString('es-CL')}
+Ingresos Totales:   CLP $${c.totalRevenue.toLocaleString('es-CL')}
+GANANCIA NETA:      CLP $${c.totalProfit.toLocaleString('es-CL')}
+ROI:                ${c.profitPercent}%
+
+📅 Generado: ${window.lastCalculation.timestamp}
+
+════════════════════════════════════════════════════════════════
+    `;
+
+    navigator.clipboard.writeText(text).then(() => {
+        alert('✅ Presupuesto copiado al portapapeles');
+    }).catch(() => {
+        alert('❌ Error al copiar. Intenta descargar JSON.');
+    });
+}
+</script>
+
+</body>
+</html>
