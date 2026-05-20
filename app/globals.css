@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-wood:        #C8924A;
+  --color-wood-light:  #E8C99A;
+  --color-wood-dark:   #8B5E2D;
+  --color-sage:        #7A9E7E;
+  --color-sage-light:  #B8D4BB;
+  --color-cream:       #FAF6F0;
+  --color-ink:         #1A0F07;
+  --color-ink-soft:    #5C4033;
+  --color-border-bk:   #E2D5C3;
+  --color-success:     #4CAF7D;
+  --color-warn:        #E8A838;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans:    'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  font-family: var(--font-sans);
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Marquee ──────────────────────────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Fade-up entry ─────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.55s cubic-bezier(0.22,1,0.36,1) both;
+}
+.animate-fade-up-delay-1 { animation-delay: 0.1s; }
+.animate-fade-up-delay-2 { animation-delay: 0.2s; }
+.animate-fade-up-delay-3 { animation-delay: 0.35s; }
+
+/* ── Intranet code blocks ──────────────────────────────────────── */
+pre.ascii-art {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: pre;
+  overflow-x: auto;
+  padding: 16px;
+  background: var(--color-cream);
+  border-radius: 8px;
+  color: var(--color-ink);
+}

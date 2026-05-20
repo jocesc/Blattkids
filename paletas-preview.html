@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blattkids — Paletas × Tipografias</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Comfortaa:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@400;500;700&family=DM+Serif+Display:ital@0;1&family=Fredoka:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,700..900;1,9..144,700..900&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Nunito:ital,wght@0,400;0,700;0,900;1,700&family=Nunito+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0E0E0E;
+  color: white;
+  min-height: 100vh;
+}
+
+/* ── HEADER ─────────────────────────────────────────────────────────── */
+.header {
+  padding: 24px 36px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #0E0E0E;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 16px;
+}
+.header-brand { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; }
+.header-sub { font-size: 11px; color: rgba(255,255,255,0.25); margin-top: 4px; }
+.header-hint {
+  font-size: 10px;
+  color: rgba(255,255,255,0.18);
+  text-align: right;
+  line-height: 1.8;
+  padding-top: 3px;
+}
+
+/* ── FONT GROUP LABELS ──────────────────────────────────────────────── */
+.tab-group-labels {
+  display: flex;
+  gap: 0;
+  margin-bottom: 0;
+}
+.tab-group-label {
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 4px 22px;
+  border-radius: 4px 4px 0 0;
+}
+.tgl-clasica { color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+.tgl-ludica  { color: #F5A623; background: rgba(245,166,35,0.08); margin-left: 2px; }
+
+/* ── FONT TABS ──────────────────────────────────────────────────────── */
+.font-tabs {
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.font-tabs::-webkit-scrollbar { display: none; }
+
+.font-tab {
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 10px 20px 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+  color: rgba(255,255,255,0.35);
+  position: relative;
+  bottom: -1px;
+}
+.font-tab:hover { color: rgba(255,255,255,0.72); background: rgba(255,255,255,0.03); }
+.font-tab.active { border-bottom-color: #C8924A; color: white; }
+.font-tab.active.ludica { border-bottom-color: #F5A623; }
+
+.ft-sample { font-size: 20px; line-height: 1; margin-bottom: 4px; display: block; }
+.ft-name   { font-size: 9.5px; font-weight: 600; display: block; font-family: -apple-system, sans-serif; }
+.ft-tag    { font-size: 8.5px; display: block; margin-top: 1px; opacity: 0.45; font-family: -apple-system, sans-serif; }
+
+.ft-badge {
+  display: inline-block;
+  font-size: 7px; font-weight: 700; letter-spacing: 1px;
+  padding: 1px 5px; border-radius: 20px;
+  margin-left: 5px; vertical-align: middle;
+  font-family: -apple-system, sans-serif;
+  text-transform: uppercase;
+}
+.ft-badge-actual { background: #C8924A; color: white; }
+.ft-badge-nuevo  { background: #F5A623; color: #1A0F07; }
+
+.tab-divider {
+  width: 1px;
+  background: rgba(255,255,255,0.1);
+  margin: 8px 4px 12px;
+  flex-shrink: 0;
+}
+
+/* ── PALETTE SECTION HEADERS ────────────────────────────────────────── */
+.section-header {
+  padding: 6px 0 14px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+.sh-clasica { color: rgba(255,255,255,0.2); }
+.sh-ludica  { color: #F5A623; }
+
+/* ── GRID WRAPPER ───────────────────────────────────────────────────── */
+.grid-wrapper {
+  padding: 28px 36px 60px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.15) transparent;
+}
+.grid-wrapper::-webkit-scrollbar { height: 4px; }
+.grid-wrapper::-webkit-scrollbar-track { background: transparent; }
+.grid-wrapper::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+
+.palettes-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.palette-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.palette-group-cards {
+  display: flex;
+  gap: 14px;
+}
+
+/* ── PALETTE CARD ───────────────────────────────────────────────────── */
+.palette-card {
+  width: 258px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.45);
+  transition: transform 0.24s cubic-bezier(0.22,1,0.36,1), box-shadow 0.24s;
+}
+.palette-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.55);
+}
+
+/* ── CHOOSE BTN ─────────────────────────────────────────────────────── */
+.choose-btn {
+  width: 100%; padding: 12px 14px;
+  font-size: 9.5px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  cursor: pointer; border: none; color: white;
+  transition: filter 0.15s; flex-shrink: 0;
+}
+.choose-btn:hover { filter: brightness(1.15); }
+
+/* ── VERTICAL DIVIDER ───────────────────────────────────────────────── */
+.group-divider {
+  width: 1px;
+  background: rgba(255,255,255,0.08);
+  align-self: stretch;
+  margin: 28px 10px 0;
+  flex-shrink: 0;
+}
+
+/* ── TOAST ──────────────────────────────────────────────────────────── */
+.toast {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(90px);
+  background: white; color: #1A0F07;
+  padding: 13px 28px; border-radius: 40px;
+  font-size: 12.5px; font-weight: 600;
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  z-index: 9999; white-space: nowrap;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="header-brand">Blattkids · Identidad Visual</div>
+      <div class="header-sub">10 tipografias x 10 paletas — elige la combinacion que mejor representa la marca</div>
+    </div>
+    <div class="header-hint">
+      1 · Selecciona tipografia en las pestanas<br>
+      2 · Compara las 10 paletas de color<br>
+      3 · Haz clic en "Elegir" para confirmar
+    </div>
+  </div>
+
+  <div class="tab-group-labels">
+    <div class="tab-group-label tgl-clasica">Clasicas &nbsp;·&nbsp; 5 opciones</div>
+    <div class="tab-group-label tgl-ludica">Ludicas para familias &nbsp;·&nbsp; 5 opciones</div>
+  </div>
+  <div class="font-tabs" id="fontTabs"></div>
+</div>
+
+<div class="grid-wrapper">
+  <div class="palettes-row" id="palettesRow"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── FONTS ───────────────────────────────────────────────────────────────────
+var FONTS = [
+  // ── CLASICAS ──────────────────────────────────────────────────────────────
+  { id:'fraunces',  display:'Fraunces',            body:'Plus Jakarta Sans', dw:'800',
+    sample:'Fraunces',  name:'Fraunces + Jakarta',  tag:'Literaria · geometrica',   type:'clasica', current:true  },
+  { id:'nunito',    display:'Nunito',               body:'Nunito Sans',       dw:'900',
+    sample:'Nunito',    name:'Nunito + Nunito Sans', tag:'Redondeada · familiar',    type:'clasica', current:false },
+  { id:'dm',        display:'DM Serif Display',     body:'DM Sans',           dw:'400',
+    sample:'DM Serif',  name:'DM Serif + DM Sans',  tag:'Escandinava · editorial',  type:'clasica', current:false },
+  { id:'cormorant', display:'Cormorant Garamond',   body:'Raleway',           dw:'700',
+    sample:'Cormorant', name:'Cormorant + Raleway',  tag:'Clasica · atemporal',      type:'clasica', current:false },
+  { id:'playfair',  display:'Playfair Display',     body:'Lato',              dw:'700',
+    sample:'Playfair',  name:'Playfair + Lato',      tag:'Editorial · confiable',    type:'clasica', current:false },
+  // ── LUDICAS ───────────────────────────────────────────────────────────────
+  { id:'baloo',     display:'Baloo 2',              body:'Nunito Sans',       dw:'800',
+    sample:'Baloo 2',   name:'Baloo 2 + Nunito Sans', tag:'Festiva · para familias', type:'ludica',  current:false },
+  { id:'poppins',   display:'Poppins',              body:'Poppins',           dw:'800',
+    sample:'Poppins',   name:'Poppins + Poppins',    tag:'Moderna · versatil',       type:'ludica',  current:false },
+  { id:'quicksand', display:'Quicksand',            body:'Nunito Sans',       dw:'700',
+    sample:'Quicksand', name:'Quicksand + Nunito',   tag:'Suave · equilibrada',      type:'ludica',  current:false },
+  { id:'comfortaa', display:'Comfortaa',            body:'Nunito',            dw:'700',
+    sample:'Comfortaa', name:'Comfortaa + Nunito',   tag:'Redonda · tierna',         type:'ludica',  current:false },
+  { id:'fredoka',   display:'Fredoka',              body:'Nunito Sans',       dw:'700',
+    sample:'Fredoka',   name:'Fredoka + Nunito',     tag:'Juguetona · expresiva',    type:'ludica',  current:false },
+]
+
+// ─── PALETTES ────────────────────────────────────────────────────────────────
+var PALETTES = [
+  // ── CLASICAS ──────────────────────────────────────────────────────────────
+  { id:'ambar',      name:'Ambar',      type:'clasica', badge:'ACTUAL',
+    bg:'#FAF6F0', ink:'#1A0F07', accent:'#C8924A', muted:'#5C4033', border:'#E2D5C3', dark:'#1A0F07', card:'#FFFFFF' },
+  { id:'bosque',     name:'Bosque',     type:'clasica', badge:null,
+    bg:'#EEF3EB', ink:'#1B2E1F', accent:'#B89040', muted:'#3D5C42', border:'#C8D9C2', dark:'#1B2E1F', card:'#FFFFFF' },
+  { id:'nordica',    name:'Nordica',    type:'clasica', badge:null,
+    bg:'#FFFFFF',  ink:'#141414', accent:'#D4724A', muted:'#555555', border:'#E5E5E5', dark:'#141414', card:'#F7F7F7' },
+  { id:'medianoche', name:'Medianoche', type:'clasica', badge:null,
+    bg:'#F2F5F8', ink:'#0F1C2E', accent:'#C8924A', muted:'#4A5D75', border:'#CDD8E3', dark:'#0F1C2E', card:'#FFFFFF' },
+  { id:'arcilla',    name:'Arcilla',    type:'clasica', badge:null,
+    bg:'#FBF7F3', ink:'#201A16', accent:'#B86B52', muted:'#6B4E40', border:'#E4D5C8', dark:'#201A16', card:'#FFFFFF' },
+  // ── LUDICAS ───────────────────────────────────────────────────────────────
+  { id:'primavera',  name:'Primavera',  type:'ludica',  badge:'NUEVA',
+    bg:'#F2F8EE', ink:'#1C361A', accent:'#E87D3A', muted:'#3D6638', border:'#BED9B4', dark:'#1C361A', card:'#FFFFFF' },
+  { id:'durazno',    name:'Durazno',    type:'ludica',  badge:'NUEVA',
+    bg:'#FFF7F3', ink:'#2B1510', accent:'#E07050', muted:'#7A4035', border:'#F4D5C5', dark:'#2B1510', card:'#FFFFFF' },
+  { id:'cielo',      name:'Cielo',      type:'ludica',  badge:'NUEVA',
+    bg:'#EFF5FD', ink:'#0C2040', accent:'#F5A623', muted:'#385A7A', border:'#C2D8EF', dark:'#0C2040', card:'#FFFFFF' },
+  { id:'frambuesa',  name:'Frambuesa',  type:'ludica',  badge:'NUEVA',
+    bg:'#FEF4F6', ink:'#280E18', accent:'#C83060', muted:'#784050', border:'#F2CAD5', dark:'#280E18', card:'#FFFFFF' },
+  { id:'menta',      name:'Menta',      type:'ludica',  badge:'NUEVA',
+    bg:'#F0F9F4', ink:'#0E2C1A', accent:'#D4724A', muted:'#2A6040', border:'#B5DCCA', dark:'#0E2C1A', card:'#FFFFFF' },
+]
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+var activeFont = FONTS[0]
+
+// ─── FONT TABS ───────────────────────────────────────────────────────────────
+function renderFontTabs() {
+  var html = ''
+  for (var i = 0; i < FONTS.length; i++) {
+    var f = FONTS[i]
+    if (i === 5) html += '<div class="tab-divider"></div>'
+    var badgeHtml = ''
+    if (f.current) badgeHtml = '<span class="ft-badge ft-badge-actual">actual</span>'
+    else if (f.type === 'ludica') badgeHtml = '<span class="ft-badge ft-badge-nuevo">nueva</span>'
+    var activeClass = f.id === activeFont.id ? 'active' : ''
+    var ludicaClass = f.type === 'ludica' ? ' ludica' : ''
+    html += '<button class="font-tab ' + activeClass + ludicaClass + '" onclick="pickFont(\'' + f.id + '\')">'
+    html += '<span class="ft-sample" style="font-family:\'' + f.display + '\',serif;font-weight:' + f.dw + ';">' + f.sample + '</span>'
+    html += '<span class="ft-name">' + f.name + badgeHtml + '</span>'
+    html += '<span class="ft-tag">' + f.tag + '</span>'
+    html += '</button>'
+  }
+  document.getElementById('fontTabs').innerHTML = html
+}
+
+// ─── MINI SITE ───────────────────────────────────────────────────────────────
+function miniSite(p, f) {
+  var D = "font-family:'" + f.display + "',serif;font-weight:" + f.dw + ";"
+  var B = "font-family:'" + f.body + "',sans-serif;"
+
+  var ticker = ['Madera natural','Montessori','0 a 10 anos','Hecho en Chile','Sin plasticos'].map(function(t) {
+    return '<span style="color:rgba(255,255,255,0.25);font-size:8px;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;">· ' + t + '</span>'
+  }).join('')
+
+  var pills = ['Natural','Certificado','Sin toxicos'].map(function(s) {
+    return '<span style="' + B + 'background:' + p.card + ';border:1px solid ' + p.border + ';border-radius:20px;padding:3px 8px;font-size:7.5px;color:' + p.muted + ';">' + s + '</span>'
+  }).join('')
+
+  var stats = [['0-10','anos'],['100%','natural'],['2','normas']].map(function(pair) {
+    return '<div><div style="' + D + 'font-size:19px;line-height:1;letter-spacing:-0.02em;color:' + p.ink + ';">' + pair[0] + '</div>' +
+           '<div style="' + B + 'font-size:7.5px;color:' + p.muted + ';text-transform:uppercase;letter-spacing:1px;margin-top:3px;">' + pair[1] + '</div></div>'
+  }).join('')
+
+  var pillars = [['01','Independencia'],['02','Natural'],['03','Certificado']].map(function(arr) {
+    return '<div>' +
+      '<div style="' + D + 'font-size:20px;line-height:1;color:' + p.border + ';margin-bottom:2px;">' + arr[0] + '</div>' +
+      '<div style="' + D + 'font-size:10px;color:' + p.ink + ';">' + arr[1] + '</div>' +
+    '</div>'
+  }).join('')
+
+  var prods = [
+    {e:'🛏',n:'Cama Nido',a:'0-3 a',pr:'$120K',c:'#C8924A'},
+    {e:'📚',n:'Estanteria',a:'6m-5a',pr:'$95K',c:'#7A9E7E'},
+    {e:'🗼',n:'Torre',a:'1-4 a',pr:'$110K',c:'#D4724A'},
+  ].map(function(prod) {
+    return '<div style="background:' + p.card + ';border:1px solid ' + p.border + ';border-radius:9px;overflow:hidden;">' +
+      '<div style="background:linear-gradient(135deg,' + prod.c + '28,' + prod.c + '08);height:40px;display:flex;align-items:center;justify-content:center;font-size:18px;">' + prod.e + '</div>' +
+      '<div style="padding:5px 7px;">' +
+        '<div style="' + B + 'font-size:7px;color:' + p.accent + ';font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:1px;">' + prod.a + '</div>' +
+        '<div style="' + D + 'font-size:10.5px;color:' + p.ink + ';line-height:1.2;">' + prod.n + '</div>' +
+        '<div style="' + B + 'font-size:9.5px;font-weight:700;color:' + p.ink + ';margin-top:1px;">' + prod.pr + '</div>' +
+      '</div>' +
+    '</div>'
+  }).join('')
+
+  return (
+    '<div style="' + B + 'background:' + p.bg + ';color:' + p.ink + ';font-size:11px;line-height:1.5;">' +
+
+    // NAV
+    '<div style="background:' + p.card + ';border-bottom:1px solid ' + p.border + ';padding:9px 12px;display:flex;align-items:center;justify-content:space-between;">' +
+      '<span style="' + D + 'font-size:14.5px;letter-spacing:-0.02em;color:' + p.ink + ';">Blattkids</span>' +
+      '<div style="' + B + 'display:flex;gap:8px;align-items:center;font-size:9px;color:' + p.muted + ';">' +
+        '<span>Catalogo</span><span>Nosotros</span>' +
+        '<span style="background:' + p.ink + ';color:white;padding:3px 8px;border-radius:20px;font-size:8.5px;font-weight:700;">🛒 2</span>' +
+      '</div>' +
+    '</div>' +
+
+    // TICKER
+    '<div style="background:' + p.dark + ';padding:4px 12px;display:flex;gap:12px;overflow:hidden;">' + ticker + '</div>' +
+
+    // HERO
+    '<div style="padding:20px 12px 16px;position:relative;overflow:hidden;">' +
+      '<div style="position:absolute;right:-20px;top:-20px;width:140px;height:140px;border-radius:50%;background:radial-gradient(' + p.accent + '18,transparent 70%);pointer-events:none;"></div>' +
+      '<div style="' + B + 'font-size:8px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:' + p.accent + ';margin-bottom:7px;">Muebles Montessori · 0 a 10 anos</div>' +
+      '<div style="' + D + 'font-size:26px;line-height:0.91;letter-spacing:-0.03em;color:' + p.ink + ';margin-bottom:9px;">Muebles<br>que crecen<br><em style="color:' + p.accent + ';font-style:italic;">con tu hijo.</em></div>' +
+      '<div style="' + B + 'font-size:9.5px;color:' + p.muted + ';line-height:1.6;margin-bottom:12px;max-width:180px;">Disenados con medidas certificadas para favorecer la independencia.</div>' +
+      '<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px;">' +
+        '<span style="' + B + 'background:' + p.dark + ';color:white;padding:6px 12px;border-radius:7px;font-size:9px;font-weight:700;cursor:default;">Ver catalogo</span>' +
+        '<span style="' + B + 'border:1px solid ' + p.border + ';color:' + p.muted + ';padding:6px 11px;border-radius:7px;font-size:9px;cursor:default;">Nuestra historia</span>' +
+      '</div>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:4px;">' + pills + '</div>' +
+    '</div>' +
+
+    // STATS
+    '<div style="background:' + p.card + ';border-top:1px solid ' + p.border + ';border-bottom:1px solid ' + p.border + ';padding:12px;display:grid;grid-template-columns:repeat(3,1fr);text-align:center;">' + stats + '</div>' +
+
+    // PILLARS
+    '<div style="border-bottom:1px solid ' + p.border + ';padding:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">' + pillars + '</div>' +
+
+    // PRODUCTS
+    '<div style="padding:13px 12px;">' +
+      '<div style="' + B + 'font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:' + p.accent + ';margin-bottom:9px;">Destacados</div>' +
+      '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;">' + prods + '</div>' +
+    '</div>' +
+
+    // DARK CTA
+    '<div style="background:' + p.dark + ';padding:14px 12px;">' +
+      '<div style="' + B + 'font-size:7.5px;letter-spacing:2.5px;text-transform:uppercase;color:' + p.accent + ';margin-bottom:4px;">Diseno a medida</div>' +
+      '<div style="' + D + 'font-size:15px;line-height:1.15;letter-spacing:-0.02em;color:white;margin-bottom:6px;">Tu espacio tiene medidas especiales?</div>' +
+      '<div style="' + B + 'font-size:9px;color:rgba(255,255,255,0.4);line-height:1.5;margin-bottom:11px;">Fabricamos a pedido segun la edad de tu hijo.</div>' +
+      '<span style="' + B + 'display:inline-block;background:' + p.accent + ';color:white;padding:7px 14px;border-radius:7px;font-size:9px;font-weight:700;cursor:default;">Solicitar cotizacion</span>' +
+    '</div>' +
+
+    '</div>'
+  )
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function renderAll() {
+  var clasicas = PALETTES.filter(function(p) { return p.type === 'clasica' })
+  var ludicas  = PALETTES.filter(function(p) { return p.type === 'ludica'  })
+
+  function buildGroup(palettes, label, labelClass) {
+    var cards = palettes.map(function(p) {
+      var stripeColor = p.type === 'ludica' ? p.accent : 'rgba(255,255,255,0.06)'
+      var stripe = '<div style="height:3px;background:' + stripeColor + ';flex-shrink:0;"></div>'
+
+      var badgeHtml = ''
+      if (p.badge === 'ACTUAL') {
+        badgeHtml = '<span style="font-size:8px;font-weight:700;letter-spacing:1px;background:#C8924A;color:white;padding:2px 7px;border-radius:20px;text-transform:uppercase;">ACTUAL</span>'
+      } else if (p.badge === 'NUEVA') {
+        badgeHtml = '<span style="font-size:8px;font-weight:700;letter-spacing:1px;background:#F5A623;color:#1A0F07;padding:2px 7px;border-radius:20px;text-transform:uppercase;">NUEVA</span>'
+      }
+
+      var floatingLabel = '<div style="position:absolute;top:3px;left:0;right:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:linear-gradient(' + p.dark + 'CC,transparent);pointer-events:none;">' +
+        '<span style="font-size:9.5px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:white;text-shadow:0 1px 6px rgba(0,0,0,0.7);">' + p.name + '</span>' +
+        badgeHtml +
+      '</div>'
+
+      var btnStyle = 'background:' + p.accent + ';font-family:\'' + activeFont.body + '\',sans-serif;'
+      var btn = '<button class="choose-btn" style="' + btnStyle + '" onclick="choose(\'' + p.name + '\')">Elegir ' + p.name + ' + ' + activeFont.sample + '</button>'
+
+      return '<div class="palette-card" style="position:relative;">' + stripe + floatingLabel +
+             '<div style="flex:1;overflow:hidden;">' + miniSite(p, activeFont) + '</div>' + btn + '</div>'
+    }).join('')
+
+    return '<div class="palette-group">' +
+      '<div class="section-header ' + labelClass + '">' + label + '</div>' +
+      '<div class="palette-group-cards">' + cards + '</div>' +
+    '</div>'
+  }
+
+  var groupA = buildGroup(clasicas, 'Paletas clasicas', 'sh-clasica')
+  var groupB = buildGroup(ludicas,  'Paletas ludicas · para familias con ninos', 'sh-ludica')
+
+  document.getElementById('palettesRow').innerHTML =
+    groupA +
+    '<div class="group-divider"></div>' +
+    groupB
+}
+
+// ─── INTERACTIONS ─────────────────────────────────────────────────────────────
+function pickFont(id) {
+  for (var i = 0; i < FONTS.length; i++) {
+    if (FONTS[i].id === id) { activeFont = FONTS[i]; break; }
+  }
+  renderFontTabs()
+  renderAll()
+}
+
+function choose(paletteName) {
+  var t = document.getElementById('toast')
+  t.textContent = '✓  ' + paletteName + ' + ' + activeFont.sample + ' — avisame y lo aplico!'
+  t.classList.add('show')
+  setTimeout(function() { t.classList.remove('show') }, 4000)
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderFontTabs()
+renderAll()
+</script>
+</body>
+</html>
