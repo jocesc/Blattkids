@@ -1,15 +1,40 @@
 'use client'
 
-import { useActionState } from 'react'
-import { login } from '@/app/actions/auth'
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
-  const [state, formAction, pending] = useActionState(
-    async (_prev: { error?: string } | null, formData: FormData) => {
-      return login(formData) as Promise<{ error?: string } | null>
-    },
-    null
-  )
+  const router = useRouter()
+  const [error, setError] = useState<string | null>(null)
+  const [pending, setPending] = useState(false)
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setError(null)
+    setPending(true)
+
+    const formData = new FormData(e.currentTarget)
+    const username = formData.get('username') as string
+    const password = formData.get('password') as string
+
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setError(data.error || 'Error al iniciar sesión')
+      } else {
+        router.push('/dashboard')
+      }
+    } catch {
+      setError('Error de conexión, intenta de nuevo')
+    } finally {
+      setPending(false)
+    }
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-cream">
@@ -26,7 +51,7 @@ export default function LoginPage() {
         <div className="bg-white border border-border-bk rounded-2xl p-8 shadow-sm">
           <h2 className="text-lg font-semibold text-ink mb-6">Iniciar sesión</h2>
 
-          <form action={formAction} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
               <label htmlFor="username" className="block text-xs font-medium text-ink-soft uppercase tracking-wide mb-1.5">
                 Usuario
@@ -56,8 +81,8 @@ export default function LoginPage() {
               />
             </div>
 
-            {state?.error && (
-              <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">{state.error}</p>
+            {error && (
+              <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">{error}</p>
             )}
 
             <button

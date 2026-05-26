@@ -5,7 +5,7 @@ const secret = new TextEncoder().encode(
   process.env.AUTH_SECRET || 'fallback-secret-change-in-production'
 )
 
-const PUBLIC_PATHS = ['/login', '/api/auth']
+const PUBLIC_PATHS = ['/login', '/api/auth', '/api/login']
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
